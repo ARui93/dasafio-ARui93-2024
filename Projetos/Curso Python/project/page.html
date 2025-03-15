@@ -1,0 +1,223 @@
+<!-- 1. Tela de Login -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Marmorix</title>
+    <style>
+        body {
+            background-color: #f0f0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+        .eye-icon {
+            cursor: pointer;
+        }
+        .login-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .login-btn:hover {
+            background-color: #45a049;
+        }
+        .register-link {
+            color: #007BFF;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form>
+            <input type="text" id="username" placeholder="Nome de usuário" required>
+            <div style="position: relative;">
+                <input type="password" id="password" placeholder="Senha" required>
+                <span class="eye-icon" onclick="togglePassword()">👁️</span>
+            </div>
+            <button class="login-btn" type="submit">Login</button>
+        </form>
+        <a href="#" class="register-link">Cadastre-se</a>
+    </div>
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+        }
+    </script>
+</body>
+</html>
+<!-- 2. Tela de Cadastro de Usuário -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Marmorix</title>
+    <style>
+        /* Reutilizando o estilo da tela de login */
+        body, input, .register-btn, .back-link { /* mesmo estilo da tela anterior */ }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Cadastro de Usuário</h2>
+        <form>
+            <input type="text" id="name" placeholder="Nome" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <div style="position: relative;">
+                <input type="password" id="password" placeholder="Senha" required>
+                <span class="eye-icon" onclick="togglePassword()">👁️</span>
+            </div>
+            <select id="user-type" required>
+                <option value="" disabled selected>Selecione o tipo de usuário</option>
+                <option value="admin">Administrador</option>
+                <option value="consultant">Consultor</option>
+            </select>
+            <button class="register-btn" type="submit">Cadastrar</button>
+        </form>
+        <a href="#" class="back-link">Voltar ao Login</a>
+    </div>
+</body>
+</html>
+<!-- 3. Tela de Listagem de Usuários -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários - Marmorix</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .action-icons {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Lista de Usuários</h2>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Tipo</th>
+            <th>Ações</th>
+        </tr>
+        <tr>
+            <td>João</td>
+            <td>joao@example.com</td>
+            <td>Consultor</td>
+            <td>
+                <span class="action-icons">✏️</span>
+                <span class="action-icons">🗑️</span>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+4. Tela de Gerenciamento de Acabamentos
+html
+Copiar código
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acabamentos - Marmorix</title>
+    <style>
+        /* Estilos similares à tabela de usuários */
+    </style>
+</head>
+<body>
+    <h2>Gerenciamento de Acabamentos</h2>
+    <form>
+        <input type="text" id="finish-name" placeholder="Nome do Acabamento" required>
+        <button type="submit">Adicionar</button>
+    </form>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Ações</th>
+        </tr>
+        <tr>
+            <td>Acabamento A</td>
+            <td>
+                <span class="action-icons">✏️</span>
+                <span class="action-icons">🗑️</span>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+<!-- 5. Tela de Gerenciamento de Materiais
+Esta tela segue a mesma estrutura de "Gerenciamento de Acabamentos", apenas adaptando os nomes dos campos para "Materiais".
+
+6. Tela de Gerenciamento de Produtos
+Aqui basta replicar a estrutura das outras telas de gerenciamento e listar os produtos em uma tabela, com os campos "Nome" e "Categoria", e suas ações. -->
+
+<!-- 7. Tela de Projetos -->
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos - Marmorix</title>
+</head>
+<body>
+    <h2>Gerenciamento de Projetos</h2>
+    <form>
+        <input type="text" placeholder="Nome do Projeto" required>
+        <select required>
+            <option value="" disabled selected>Consultor</option>
+            <!-- opções de consultores -->
+        </select>
+        <button type="submit">Adicionar Projeto</button>
+    </form>
+    <!-- Tabela com nome do projeto e consultor -->
+</body>
+</html>

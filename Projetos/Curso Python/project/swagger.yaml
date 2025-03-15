@@ -1,0 +1,1426 @@
+info:
+  title: API de Marmoraria
+  description: Documentação da API para gerenciamento de marmoraria, incluindo usuários, acabamentos, materiais, produtos, projetos e orçamentos.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+    description: URL local de desenvolvimento
+paths:
+  /users/create:
+    post:
+      summary: Cria um novo usuário
+      requestBody:
+        description: Dados do novo usuário
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                senha:
+                  type: string
+                admin:
+                  type: boolean
+                  default: false
+              required:
+                - nome
+                - senha
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /users/login:
+    post:
+      summary: Faz login de um usuário
+      requestBody:
+        description: Dados de login do usuário
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                senha:
+                  type: string
+              required:
+                - nome
+                - senha
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Credenciais inválidas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /users/logout:
+    post:
+      summary: Faz logout de um usuário
+      responses:
+        '200':
+          description: Logout realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Autenticação necessária
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /users/list:
+    get:
+      summary: Lista todos os usuários
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    email:
+                      type: string
+                    admin:
+                      type: boolean
+        '401':
+          description: Autenticação necessária
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /users/{user_id}:
+    put:
+      summary: Atualiza um usuário existente
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o usuário
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                senha:
+                  type: string
+                admin:
+                  type: boolean
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Usuário não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /users/{user_id}:
+    delete:
+      summary: Deleta um usuário
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuário deletado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '403':
+          description: Permissão negada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Usuário não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /acabamentos/create:
+    post:
+      summary: Cria um novo acabamento
+      requestBody:
+        description: Dados do novo acabamento
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+              required:
+                - nome
+      responses:
+        '201':
+          description: Acabamento criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  nome:
+                    type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /acabamentos/{acabamento_id}:
+    put:
+      summary: Atualiza um acabamento existente
+      parameters:
+        - name: acabamento_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o acabamento
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+              required:
+                - nome
+      responses:
+        '200':
+          description: Acabamento atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  acabamento:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      nome:
+                        type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Acabamento não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /acabamentos/list:
+    get:
+      summary: Lista todos os acabamentos
+      responses:
+        '200':
+          description: Lista de acabamentos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+  /materiais/create:
+    post:
+      summary: Cria um novo material
+      requestBody:
+        description: Dados do novo material
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+              required:
+                - nome
+      responses:
+        '201':
+          description: Material criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  nome:
+                    type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /materiais/{material_id}:
+    put:
+      summary: Atualiza um material existente
+      parameters:
+        - name: material_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o material
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+              required:
+                - nome
+      responses:
+        '200':
+          description: Material atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  material:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      nome:
+                        type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Material não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /materiais/list:
+    get:
+      summary: Lista todos os materiais
+      responses:
+        '200':
+          description: Lista de materiais
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+  /materiais/{material_id}/acabamentos:
+    post:
+      summary: Adiciona um acabamento a um material
+      parameters:
+        - name: material_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados do acabamento a ser adicionado ao material
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                acabamento_id:
+                  type: integer
+              required:
+                - acabamento_id
+      responses:
+        '200':
+          description: Acabamento adicionado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Material ou acabamento não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /produtos/create:
+    post:
+      summary: Cria um novo produto
+      requestBody:
+        description: Dados do novo produto
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                material_id:
+                  type: integer
+                acabamentos:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - nome
+                - material_id
+      responses:
+        '201':
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  nome:
+                    type: string
+                  material_id:
+                    type: integer
+                  acabamentos:
+                    type: array
+                    items:
+                      type: integer
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /produtos/{produto_id}:
+    put:
+      summary: Atualiza um produto existente
+      parameters:
+        - name: produto_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o produto
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                material_id:
+                  type: integer
+                acabamentos:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - nome
+                - material_id
+      responses:
+        '200':
+          description: Produto atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  produto:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      nome:
+                        type: string
+                      material_id:
+                        type: integer
+                      acabamentos:
+                        type: array
+                        items:
+                          type: integer
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Produto não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /produtos/list:
+    get:
+      summary: Lista todos os produtos
+      responses:
+        '200':
+          description: Lista de produtos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    material_id:
+                      type: integer
+                    acabamentos:
+                      type: array
+                      items:
+                        type: integer
+  /projetos/create:
+    post:
+      summary: Cria um novo projeto
+      requestBody:
+        description: Dados do novo projeto
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cliente_nome:
+                  type: string
+                produto_id:
+                  type: integer
+                quantidade:
+                  type: integer
+                preco:
+                  type: number
+                  format: float
+              required:
+                - cliente_nome
+                - produto_id
+                - quantidade
+                - preco
+      responses:
+        '201':
+          description: Projeto criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  cliente_nome:
+                    type: string
+                  produto_id:
+                    type: integer
+                  quantidade:
+                    type: integer
+                  preco:
+                    type: number
+                    format: float
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /projetos/{projeto_id}:
+    put:
+      summary: Atualiza um projeto existente
+      parameters:
+        - name: projeto_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o projeto
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cliente_nome:
+                  type: string
+                produto_id:
+                  type: integer
+                quantidade:
+                  type: integer
+                preco:
+                  type: number
+                  format: float
+              required:
+                - cliente_nome
+                - produto_id
+                - quantidade
+                - preco
+      responses:
+        '200':
+          description: Projeto atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  projeto:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      cliente_nome:
+                        type: string
+                      produto_id:
+                        type: integer
+                      quantidade:
+                        type: integer
+                      preco:
+                        type: number
+                        format: float
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Projeto não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /projetos/list:
+    get:
+      summary: Lista todos os projetos
+      responses:
+        '200':
+          description: Lista de projetos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    cliente_nome:
+                      type: string
+                    produto_id:
+                      type: integer
+                    quantidade:
+                      type: integer
+                    preco:
+                      type: number
+                      format: float
+  /orcamentos/create:
+    post:
+      summary: Cria um novo orçamento
+      requestBody:
+        description: Dados do novo orçamento
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projeto_id:
+                  type: integer
+                valor_total:
+                  type: number
+                  format: float
+                data:
+                  type: string
+                  format: date
+              required:
+                - projeto_id
+                - valor_total
+                - data
+      responses:
+        '201':
+          description: Orçamento criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  projeto_id:
+                    type: integer
+                  valor_total:
+                    type: number
+                    format: float
+                  data:
+                    type: string
+                    format: date
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /orcamentos/{orcamento_id}:
+    put:
+      summary: Atualiza um orçamento existente
+      parameters:
+        - name: orcamento_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o orçamento
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                valor_total:
+                  type: number
+                  format: float
+                data:
+                  type: string
+                  format: date
+              required:
+                - valor_total
+                - data
+      responses:
+        '200':
+          description: Orçamento atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  orcamento:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      projeto_id:
+                        type: integer
+                      valor_total:
+                        type: number
+                        format: float
+                      data:
+                        type: string
+                        format: date
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Orçamento não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /orcamentos/list:
+    get:
+      summary: Lista todos os orçamentos
+      responses:
+        '200':
+          description: Lista de orçamentos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    projeto_id:
+                      type: integer
+                    valor_total:
+                      type: number
+                      format: float
+                    data:
+                      type: string
+                      format: date
+  /materiais/create:
+    post:
+      summary: Cria um novo material
+      requestBody:
+        description: Dados do novo material
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                tipo:
+                  type: string
+              required:
+                - nome
+                - tipo
+      responses:
+        '201':
+          description: Material criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  nome:
+                    type: string
+                  tipo:
+                    type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /materiais/{material_id}/acabamentos:
+    post:
+      summary: Adiciona um acabamento a um material
+      parameters:
+        - name: material_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados do acabamento a ser adicionado ao material
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                acabamento_id:
+                  type: integer
+              required:
+                - acabamento_id
+      responses:
+        '200':
+          description: Acabamento adicionado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Material ou acabamento não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /produtos/create:
+    post:
+      summary: Cria um novo produto
+      requestBody:
+        description: Dados do novo produto
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                material_id:
+                  type: integer
+                acabamentos:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - nome
+                - material_id
+      responses:
+        '201':
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  nome:
+                    type: string
+                  material_id:
+                    type: integer
+                  acabamentos:
+                    type: array
+                    items:
+                      type: integer
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /produtos/{produto_id}:
+    put:
+      summary: Atualiza um produto existente
+      parameters:
+        - name: produto_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o produto
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                material_id:
+                  type: integer
+                acabamentos:
+                  type: array
+                  items:
+                    type: integer
+              required:
+                - nome
+                - material_id
+      responses:
+        '200':
+          description: Produto atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  produto:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      nome:
+                        type: string
+                      material_id:
+                        type: integer
+                      acabamentos:
+                        type: array
+                        items:
+                          type: integer
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Produto não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /produtos/list:
+    get:
+      summary: Lista todos os produtos
+      responses:
+        '200':
+          description: Lista de produtos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nome:
+                      type: string
+                    material_id:
+                      type: integer
+                    acabamentos:
+                      type: array
+                      items:
+                        type: integer
+  /projetos/create:
+    post:
+      summary: Cria um novo projeto
+      requestBody:
+        description: Dados do novo projeto
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cliente_nome:
+                  type: string
+                produto_id:
+                  type: integer
+                quantidade:
+                  type: integer
+                preco:
+                  type: number
+                  format: float
+              required:
+                - cliente_nome
+                - produto_id
+                - quantidade
+                - preco
+      responses:
+        '201':
+          description: Projeto criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  cliente_nome:
+                    type: string
+                  produto_id:
+                    type: integer
+                  quantidade:
+                    type: integer
+                  preco:
+                    type: number
+                    format: float
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /projetos/{projeto_id}:
+    put:
+      summary: Atualiza um projeto existente
+      parameters:
+        - name: projeto_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o projeto
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cliente_nome:
+                  type: string
+                produto_id:
+                  type: integer
+                quantidade:
+                  type: integer
+                preco:
+                  type: number
+                  format: float
+              required:
+                - cliente_nome
+                - produto_id
+                - quantidade
+                - preco
+      responses:
+        '200':
+          description: Projeto atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  projeto:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      cliente_nome:
+                        type: string
+                      produto_id:
+                        type: integer
+                      quantidade:
+                        type: integer
+                      preco:
+                        type: number
+                        format: float
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Projeto não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /projetos/list:
+    get:
+      summary: Lista todos os projetos
+      responses:
+        '200':
+          description: Lista de projetos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    cliente_nome:
+                      type: string
+                    produto_id:
+                      type: integer
+                    quantidade:
+                      type: integer
+                    preco:
+                      type: number
+                      format: float
+  /orcamentos/create:
+    post:
+      summary: Cria um novo orçamento
+      requestBody:
+        description: Dados do novo orçamento
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projeto_id:
+                  type: integer
+                valor_total:
+                  type: number
+                  format: float
+                data:
+                  type: string
+                  format: date
+              required:
+                - projeto_id
+                - valor_total
+                - data
+      responses:
+        '201':
+          description: Orçamento criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  projeto_id:
+                    type: integer
+                  valor_total:
+                    type: number
+                    format: float
+                  data:
+                    type: string
+                    format: date
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /orcamentos/{orcamento_id}:
+    put:
+      summary: Atualiza um orçamento existente
+      parameters:
+        - name: orcamento_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados para atualizar o orçamento
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                valor_total:
+                  type: number
+                  format: float
+                data:
+                  type: string
+                  format: date
+              required:
+                - valor_total
+                - data
+      responses:
+        '200':
+          description: Orçamento atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  orcamento:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      projeto_id:
+                        type: integer
+                      valor_total:
+                        type: number
+                        format: float
+                      data:
+                        type: string
+                        format: date
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Orçamento não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /orcamentos/list:
+    get:
+      summary: Lista todos os orçamentos
+      responses:
+        '200':
+          description: Lista de orçamentos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    projeto_id:
+                      type: integer
+                    valor_total:
+                      type: number
+                      format: float
+                    data:
+                      type: string
+                      format: date
