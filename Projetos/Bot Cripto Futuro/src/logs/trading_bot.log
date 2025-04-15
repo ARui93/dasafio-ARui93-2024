@@ -1,0 +1,6 @@
+
+2025-01-17 01:25:45,521 - INFO - Alavancagem configurada para 10x no par XRPUSDT.
+2025-01-17 01:25:46,978 - ERROR - Erro ao abrir posiï¿½ï¿½o LONG: APIError(code=-4061): Order's position side does not match user's setting.
+2025-01-17 01:26:48,102 - ERROR - Erro ao abrir posição LONG: APIError(code=-4061): Order's position side does not match user's setting.
+2025-01-17 01:27:49,224 - ERROR - Erro ao abrir posição LONG: APIError(code=-4061): Order's position side does not match user's setting.
+2025-01-17 01:28:50,352 - ERROR - Erro ao abrir posição LONG: APIError(code=-4061): Order's position side does not match user's setting.
